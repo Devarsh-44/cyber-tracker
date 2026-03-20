@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Devarsh · Cyber Command Center</title>
+<meta name="description" content="26-week SOC Analyst roadmap tracker — zero to hired in Canada.">
+<meta property="og:title" content="Devarsh · Cyber Command Center">
+<meta property="og:description" content="26-week SOC Analyst roadmap — zero to hired in Canada.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0a0a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Cabinet+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #080808;
+  --bg2:      #0f0f0f;
+  --bg3:      #161616;
+  --bg4:      #1c1c1c;
+  --border:   rgba(255,255,255,.07);
+  --border2:  rgba(255,255,255,.12);
+  --green:    #39ff8a;
+  --green2:   #00c85a;
+  --green-bg: rgba(57,255,138,.06);
+  --green-bg2:rgba(57,255,138,.12);
+  --amber:    #ffcc00;
+  --red:      #ff4060;
+  --blue:     #4d9fff;
+  --purple:   #b57aff;
+  --text:     #f2f2f2;
+  --text2:    #888;
+  --text3:    #444;
+  --mono:    'Space Mono', monospace;
+  --display: 'Cabinet Grotesk', sans-serif;
+  --r:  6px;
+  --r2: 12px;
+  --r3: 18px;
+  --sidebar: 220px;
+  --topbar: 52px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--display);
+  font-size:14px;
+  line-height:1.6;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+::selection{background:var(--green);color:#000}
+
+/* TOPBAR */
+.topbar{
+  position:fixed;top:0;left:0;right:0;
+  height:var(--topbar);
+  background:rgba(8,8,8,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  z-index:200;
+}
+.logo{
+  font-family:var(--mono);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.08em;
+  color:var(--text);
+  display:flex;align-items:center;gap:10px;
+}
+.logo-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 10px var(--green);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.streak-chip{
+  font-family:var(--mono);font-size:11px;
+  padding:4px 10px;border-radius:20px;
+  border:1px solid var(--green);color:var(--green);
+  letter-spacing:.06em;
+  text-shadow:0 0 8px var(--green);
+}
+.icon-btn{
+  width:32px;height:32px;border-radius:var(--r);
+  border:1px solid var(--border2);
+  background:none;color:var(--text2);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:14px;transition:all .15s;
+}
+.icon-btn:hover{border-color:var(--green);color:var(--green)}
+.menu-btn{display:none}
+
+/* LAYOUT */
+.layout{
+  display:grid;
+  grid-template-columns:var(--sidebar) 1fr;
+  min-height:100vh;
+  padding-top:var(--topbar);
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;
+  top:var(--topbar);left:0;
+  width:var(--sidebar);
+  height:calc(100vh - var(--topbar));
+  overflow-y:auto;
+  border-right:1px solid var(--border);
+  padding:20px 0 40px;
+  background:var(--bg);
+  z-index:100;
+  transition:transform .25s ease;
+}
+.sidebar::-webkit-scrollbar{display:none}
+.sb-section{padding:0 14px;margin-bottom:22px}
+.sb-label{
+  font-family:var(--mono);font-size:9px;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:8px;padding:0 2px;
+}
+.stat-tile{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  padding:10px 12px;margin-bottom:5px;
+  transition:border-color .2s;
+}
+.stat-tile:hover{border-color:var(--border2)}
+.st-val{
+  font-family:var(--mono);font-size:20px;font-weight:700;
+  color:var(--green);
+  text-shadow:0 0 20px rgba(57,255,138,.3);
+}
+.st-lbl{font-size:10px;color:var(--text3);margin-top:2px;letter-spacing:.02em}
+
+.ph-nav-item{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 10px;border-radius:var(--r);
+  cursor:pointer;transition:all .15s;
+  margin-bottom:1px;
+}
+.ph-nav-item:hover{background:var(--bg3)}
+.ph-nav-item.pni-active{background:var(--green-bg)}
+.pni-pip{
+  width:6px;height:6px;border-radius:50%;
+  border:1px solid var(--text3);flex-shrink:0;
+  transition:all .2s;
+}
+.pni-pip.pip-done{background:var(--green);border-color:var(--green);box-shadow:0 0 6px var(--green)}
+.pni-pip.pip-active{border-color:var(--green);background:var(--green-bg2)}
+.pni-body{flex:1;min-width:0}
+.pni-name{font-size:11px;font-weight:700;color:var(--text);letter-spacing:.01em}
+.pni-meta{font-family:var(--mono);font-size:9px;color:var(--text3);margin-top:1px}
+.pni-track{height:2px;background:var(--bg4);border-radius:1px;margin-top:4px}
+.pni-fill{height:100%;border-radius:1px;background:var(--green);transition:width .4s}
+
+/* STREAK CALENDAR */
+.streak-cal{padding:0 14px}
+.streak-months{
+  display:flex;gap:2px;margin-bottom:4px;
+  font-family:var(--mono);font-size:8px;
+  color:var(--text3);letter-spacing:.06em;
+}
+.streak-month-lbl{flex:1;text-align:center}
+.streak-grid{display:flex;flex-wrap:wrap;gap:2px}
+.s-day{
+  width:13px;height:13px;border-radius:2px;
+  background:var(--bg3);border:1px solid var(--border);
+  cursor:pointer;transition:all .15s;position:relative;
+}
+.s-day:hover{border-color:var(--green)}
+.s-day.s-hit{background:var(--green);border-color:var(--green)}
+.s-day.s-today{border-color:var(--green);box-shadow:0 0 0 1px var(--green)}
+.s-day.s-study{background:var(--green-bg2);border-color:rgba(57,255,138,.3)}
+
+/* MAIN */
+.main{
+  grid-column:2;
+  padding:28px 28px 80px;
+  min-width:0;
+}
+
+/* NAV TABS */
+.nav-bar{
+  display:flex;gap:0;margin-bottom:28px;
+  border-bottom:1px solid var(--border);
+}
+.nav-tab{
+  font-family:var(--mono);font-size:10px;
+  padding:10px 18px;cursor:pointer;
+  color:var(--text3);letter-spacing:.08em;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;transition:all .15s;
+}
+.nav-tab:hover{color:var(--text2)}
+.nav-tab.nt-active{color:var(--green);border-bottom-color:var(--green)}
+
+/* PAGE */
+.page{display:none}
+.page.pg-active{display:block}
+
+/* HERO STATS */
+.hero-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;margin-bottom:28px;
+}
+.hero-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:var(--r3);
+  padding:16px 18px;
+  position:relative;overflow:hidden;
+  transition:border-color .2s,transform .15s;
+}
+.hero-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.hero-card::after{
+  content:'';position:absolute;
+  bottom:0;left:0;right:0;height:1px;
+  background:var(--green);opacity:0;
+  transition:opacity .3s;
+}
+.hero-card:hover::after{opacity:1}
+.hc-val{
+  font-family:var(--mono);font-size:30px;font-weight:700;
+  color:var(--text);line-height:1;
+}
+.hc-label{font-size:10px;color:var(--text3);margin-top:6px;letter-spacing:.04em;text-transform:uppercase}
+.hc-sub{font-family:var(--mono);font-size:9px;margin-top:4px}
+
+/* PHASE SECTION */
+.phase-sec{margin-bottom:36px}
+.phase-hdr{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:14px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--border);
+}
+.ph-num{
+  font-family:var(--mono);font-size:11px;
+  color:var(--text3);letter-spacing:.08em;
+  min-width:36px;
+}
+.ph-name{
+  font-family:var(--display);font-size:16px;font-weight:800;
+  color:var(--text);flex:1;
+}
+.ph-wks{
+  font-family:var(--mono);font-size:9px;
+  padding:3px 10px;border-radius:20px;
+  border:1px solid var(--border2);color:var(--text3);
+}
+.ph-pct{
+  font-family:var(--mono);font-size:20px;font-weight:700;
+  color:var(--green);min-width:48px;text-align:right;
+  text-shadow:0 0 16px rgba(57,255,138,.3);
+}
+
+/* WEEK CARD */
+.wk-card{
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  margin-bottom:6px;overflow:hidden;
+  transition:border-color .2s;
+}
+.wk-card.wk-done{border-color:rgba(57,255,138,.3)}
+.wk-card.wk-done .wk-hdr{background:var(--green-bg)}
+.wk-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px;cursor:pointer;transition:background .15s;
+}
+.wk-hdr:hover{background:var(--bg3)}
+.wk-badge{
+  font-family:var(--mono);font-size:9px;
+  color:var(--text3);min-width:32px;letter-spacing:.06em;
+}
+.wk-info{flex:1;min-width:0}
+.wk-title{font-size:12px;font-weight:700;color:var(--text)}
+.wk-sub{font-size:10px;color:var(--text3);margin-top:1px}
+.wk-prog{display:flex;align-items:center;gap:8px}
+.wk-frac{
+  font-family:var(--mono);font-size:10px;
+  min-width:32px;text-align:right;
+}
+.wk-bar-wrap{width:48px;height:3px;background:var(--bg4);border-radius:2px;overflow:hidden}
+.wk-bar-fill{height:100%;border-radius:2px;background:var(--green);transition:width .3s}
+.wk-chev{
+  font-size:9px;color:var(--text3);
+  transition:transform .2s;margin-left:2px;
+}
+.wk-chev.chev-open{transform:rotate(90deg)}
+
+/* TASK LIST */
+.task-body{display:none;padding:2px 14px 10px}
+.task-row{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:7px 0;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:opacity .15s;
+}
+.task-row:last-child{border-bottom:none}
+.task-row:hover{opacity:.75}
+.t-cb{
+  width:15px;height:15px;border-radius:3px;
+  border:1px solid var(--border2);
+  flex-shrink:0;margin-top:2px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.t-cb.cb-done{background:var(--green);border-color:var(--green)}
+.t-cb.cb-done::after{
+  content:'';display:block;
+  width:7px;height:4px;
+  border-left:1.5px solid #000;
+  border-bottom:1.5px solid #000;
+  transform:rotate(-45deg) translateY(-1px);
+}
+.t-text{font-size:11px;color:var(--text);flex:1;line-height:1.5}
+.t-text.t-done{color:var(--text3);text-decoration:line-through}
+.t-tag{
+  font-family:var(--mono);font-size:8px;
+  padding:2px 5px;border-radius:3px;
+  flex-shrink:0;margin-top:2px;
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.tt-vid {background:rgba(77,159,255,.1);color:#4d9fff;border:1px solid rgba(77,159,255,.2)}
+.tt-do  {background:rgba(57,255,138,.06);color:var(--green);border:1px solid rgba(57,255,138,.15)}
+.tt-build{background:rgba(181,122,255,.1);color:var(--purple);border:1px solid rgba(181,122,255,.2)}
+.tt-cert {background:rgba(255,204,0,.08);color:var(--amber);border:1px solid rgba(255,204,0,.2)}
+
+.wk-done-chip{
+  background:var(--green-bg);
+  border:1px solid rgba(57,255,138,.2);
+  border-radius:var(--r);
+  padding:8px 12px;
+  margin-top:8px;
+  font-family:var(--mono);font-size:9px;
+  color:var(--green);letter-spacing:.06em;
+}
+
+/* COMPETE */
+.compete-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.comp-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--r3);padding:16px;
+}
+.comp-card-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.comp-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.comp-row:last-child{margin-bottom:0}
+.comp-name{font-size:10px;color:var(--text2);min-width:130px}
+.comp-track{flex:1;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden;border:1px solid var(--border)}
+.comp-fill{height:100%;border-radius:3px;transition:width .6s}
+.comp-pct{font-family:var(--mono);font-size:9px;color:var(--text3);min-width:28px;text-align:right}
+.edge-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.edge-item{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:var(--r);padding:10px 12px;
+}
+.edge-title{font-size:11px;font-weight:700;color:var(--green);margin-bottom:3px}
+.edge-desc{font-size:10px;color:var(--text3);line-height:1.5}
+
+.pr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pr-step{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--r2);padding:14px;text-align:center;
+}
+.pr-num{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;margin-bottom:8px}
+.pr-label{font-size:11px;font-weight:700;color:var(--text);margin-bottom:4px}
+.pr-sub{font-family:var(--mono);font-size:9px;color:var(--text3)}
+
+/* NOTES */
+.notes-wrap{max-width:680px}
+.note-ta{
+  width:100%;background:var(--bg2);
+  border:1px solid var(--border);border-radius:var(--r2);
+  padding:12px 14px;font-family:var(--mono);font-size:11px;
+  color:var(--text);resize:vertical;min-height:90px;
+  margin-bottom:10px;transition:border-color .15s;
+  line-height:1.6;
+}
+.note-ta:focus{outline:none;border-color:var(--green)}
+.note-ta::placeholder{color:var(--text3)}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.btn{
+  font-family:var(--mono);font-size:10px;
+  padding:7px 14px;border-radius:var(--r);
+  border:1px solid var(--border2);color:var(--text2);
+  background:none;cursor:pointer;transition:all .15s;
+  letter-spacing:.04em;
+}
+.btn:hover{border-color:var(--text2);color:var(--text)}
+.btn.btn-primary{border-color:var(--green);color:var(--green)}
+.btn.btn-primary:hover{background:var(--green-bg)}
+.note-entry{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--r);padding:10px 12px;margin-bottom:6px;
+}
+.note-ts{font-family:var(--mono);font-size:9px;color:var(--text3);margin-bottom:4px;letter-spacing:.05em}
+.note-txt{font-size:11px;color:var(--text2);line-height:1.6}
+
+/* SECTION LABEL */
+.sec-lbl{
+  font-family:var(--mono);font-size:9px;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:12px;
+}
+
+/* MOBILE OVERLAY */
+.sidebar-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.7);z-index:99;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  :root{--sidebar:260px}
+  .layout{grid-template-columns:1fr}
+  .sidebar{
+    transform:translateX(-100%);
+    z-index:150;
+  }
+  .sidebar.sb-open{transform:translateX(0)}
+  .sidebar-overlay.ov-show{display:block}
+  .main{grid-column:1;padding:16px 16px 80px}
+  .menu-btn{display:flex}
+  .hero-grid{grid-template-columns:repeat(2,1fr)}
+  .compete-wrap{grid-template-columns:1fr}
+  .pr-grid{grid-template-columns:1fr}
+  .ph-hdr{flex-wrap:wrap}
+  .nav-tab{padding:10px 12px;font-size:9px}
+}
+@media(max-width:420px){
+  .hero-grid{grid-template-columns:1fr 1fr}
+  .hc-val{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-dot"></div>
+    DEVARSH<span style="color:var(--text3)"> / </span><span style="color:var(--green)">CYBER</span>
+  </div>
+  <div class="topbar-right">
+    <div class="streak-chip" id="streak-chip">0 DAY STREAK</div>
+    <button class="icon-btn" title="Export backup" onclick="exportBackup()">↓</button>
+    <button class="icon-btn" title="Import backup" onclick="document.getElementById('import-file').click()">↑</button>
+    <button class="icon-btn" title="Reset all" onclick="resetAll()" style="color:var(--text3)">✕</button>
+    <button class="icon-btn menu-btn" onclick="toggleSidebar()" title="Menu">☰</button>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importBackup(event)">
+  </div>
+</div>
+
+<div class="sidebar-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-section">
+      <div class="sb-label">Overview</div>
+      <div class="stat-tile">
+        <div class="st-val" id="sb-done">0</div>
+        <div class="st-lbl">Tasks completed</div>
+      </div>
+      <div class="stat-tile">
+        <div class="st-val" id="sb-weeks">0<span style="font-family:var(--mono);font-size:13px;color:var(--text3)">/19</span></div>
+        <div class="st-lbl">Weeks done</div>
+      </div>
+      <div class="stat-tile">
+        <div class="st-val" id="sb-ahead">0<span style="font-family:var(--mono);font-size:13px;color:var(--text3)"> wks</span></div>
+        <div class="st-lbl">Ahead of avg candidate</div>
+      </div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-label">Phases</div>
+      <div id="ph-nav"></div>
+    </div>
+
+    <div class="sb-section">
+      <div class="sb-label">42-day study log</div>
+    </div>
+    <div class="streak-cal" id="streak-cal"></div>
+  </aside>
+
+  <main class="main">
+    <div class="nav-bar">
+      <div class="nav-tab nt-active" onclick="showPage('tasks',this)">TASKS</div>
+      <div class="nav-tab" onclick="showPage('compete',this)">AHEAD OF PACK</div>
+      <div class="nav-tab" onclick="showPage('notes',this)">SESSION NOTES</div>
+    </div>
+
+    <!-- TASKS -->
+    <div class="page pg-active" id="page-tasks">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <div class="hc-val" id="h-done">0</div>
+          <div class="hc-label">Tasks done</div>
+          <div class="hc-sub" style="color:var(--green)" id="h-pct">0% of plan</div>
+        </div>
+        <div class="hero-card">
+          <div class="hc-val" id="h-streak">0</div>
+          <div class="hc-label">Day streak</div>
+          <div class="hc-sub" style="color:var(--amber)" id="h-streak-sub">Log a session to start</div>
+        </div>
+        <div class="hero-card">
+          <div class="hc-val" id="h-weeks">0</div>
+          <div class="hc-label">Weeks complete</div>
+          <div class="hc-sub" style="color:var(--blue)" id="h-phase">Phase 1 active</div>
+        </div>
+        <div class="hero-card">
+          <div class="hc-val" id="h-ahead">0</div>
+          <div class="hc-label">Weeks ahead</div>
+          <div class="hc-sub" style="color:var(--text3)" id="h-ahead-sub">vs avg CS grad pivot</div>
+        </div>
+      </div>
+      <div id="phase-sections"></div>
+    </div>
+
+    <!-- COMPETE -->
+    <div class="page" id="page-compete">
+      <div class="sec-lbl" style="margin-bottom:16px">Real-time progress vs every competitor type</div>
+      <div class="compete-wrap">
+        <div class="comp-card">
+          <div class="comp-card-lbl">Your progress vs competitors</div>
+          <div id="comp-bars"></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-card-lbl">Your unfair advantages</div>
+          <div class="edge-grid">
+            <div class="edge-item"><div class="edge-title">Python + FastAPI</div><div class="edge-desc">Build threat intel tools. 95% of SOC candidates cannot code.</div></div>
+            <div class="edge-item"><div class="edge-title">CS degree</div><div class="edge-desc">Employers prefer this over cert-only. Faster ramp on every concept.</div></div>
+            <div class="edge-item"><div class="edge-title">Deployed projects</div><div class="edge-desc">Live on Vercel. Real proof, not just theory on a resume.</div></div>
+            <div class="edge-item"><div class="edge-title">SQL + databases</div><div class="edge-desc">Query SIEM logs fast. Most analysts struggle with this daily.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="sec-lbl">PR pathway — NOC 21220</div>
+      <div class="pr-grid">
+        <div class="pr-step"><div class="pr-num">STEP 01</div><div class="pr-label">Security+ certified</div><div class="pr-sub">Week 14 target</div></div>
+        <div class="pr-step"><div class="pr-num">STEP 02</div><div class="pr-label">SOC Analyst hired — NOC 21220</div><div class="pr-sub">Week 26 target</div></div>
+        <div class="pr-step"><div class="pr-num">STEP 03</div><div class="pr-label">Express Entry — PR clock starts</div><div class="pr-sub">After first job offer</div></div>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="page" id="page-notes">
+      <div class="notes-wrap">
+        <div class="sec-lbl">Session log — write after every study block</div>
+        <textarea class="note-ta" id="note-ta" placeholder="e.g. Week 1 Mon — completed TryHackMe Room 1. DNS clicked once I saw the pcap. Ports still confusing — revisit Thursday. 45 min total."></textarea>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="saveNote()">save note + mark today done</button>
+          <button class="btn" onclick="clearNotes()">clear notes</button>
+        </div>
+        <div class="sec-lbl">Previous sessions</div>
+        <div id="notes-out"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const PHASES=[
+  {name:'Phase 1 — Orient',wks:'1–2',col:'#888780'},
+  {name:'Phase 2 — Networks',wks:'3–6',col:'#39ff8a'},
+  {name:'Phase 3 — Security+',wks:'7–14',col:'#b57aff'},
+  {name:'Phase 4 — Hands-on',wks:'15–22',col:'#ffcc00'},
+  {name:'Phase 5 — Job Ready',wks:'23–26',col:'#ff4060'},
+];
+
+const WEEKS=[
+  {ph:0,title:'Week 1 — your very first week',sub:'TryHackMe orientation + accounts setup',tasks:[
+    {t:'Watch: Professor Messer "what is cybersecurity" on YouTube',tag:'vid'},
+    {t:'Create TryHackMe account — complete Room 1 Pre-Security path',tag:'do'},
+    {t:'Complete Room 2 "Intro to Defensive Security"',tag:'do'},
+    {t:'Read 2 Medium articles: "day in the life of SOC analyst Canada"',tag:'do'},
+    {t:'Complete Room 3 "Search Skills" on TryHackMe',tag:'do'},
+    {t:'Go to splunk.com/training — create account and bookmark Fundamentals 1',tag:'do'},
+    {t:'Search Canadian SOC Analyst job postings — save list of required skills',tag:'do'},
+  ]},
+  {ph:0,title:'Week 2 — orientation complete',sub:'Linux basics + MITRE ATT&CK + buy Professor Messer course',tasks:[
+    {t:'TryHackMe: Linux Fundamentals Part 1',tag:'do'},
+    {t:'TryHackMe: Linux Fundamentals Parts 2 and 3',tag:'do'},
+    {t:'Watch: "MITRE ATT&CK framework explained for beginners" on YouTube',tag:'vid'},
+    {t:'Explore attack.mitre.org — click around and understand the structure',tag:'do'},
+    {t:'Download and install Wireshark — capture your first home network traffic',tag:'do'},
+    {t:'Watch: David Bombal "Wireshark for beginners" first 2 videos',tag:'vid'},
+    {t:'Buy Professor Messer Security+ SY0-701 course (~$50 CAD) at professormesser.com',tag:'cert'},
+  ]},
+  {ph:1,title:'Week 3 — how the internet works',sub:'IP, DNS, HTTP, ports — the language of every attack',tasks:[
+    {t:'Watch: NetworkChuck "What is an IP address?" and "What is DNS?"',tag:'vid'},
+    {t:'TryHackMe: "DNS in Detail" room',tag:'do'},
+    {t:'Watch: NetworkChuck "What is a port?"',tag:'vid'},
+    {t:'TryHackMe: "HTTP in Detail" + "How Websites Work" rooms',tag:'do'},
+    {t:'TryHackMe: "What is Networking?" room — start Network Fundamentals module',tag:'do'},
+    {t:'Watch: Professor Messer OSI Model free video on YouTube',tag:'vid'},
+    {t:'Write OSI model explanation in your own words — all 7 layers from memory',tag:'do'},
+  ]},
+  {ph:1,title:'Week 4 — packets, firewalls, attacks',sub:'TCP/UDP, Nmap, VirtualBox install',tasks:[
+    {t:'Watch: Professor Messer "Network Protocols" — TCP vs UDP',tag:'vid'},
+    {t:'TryHackMe: "Packets and Frames" room',tag:'do'},
+    {t:'Watch: NetworkChuck "What is a firewall and how does it work?"',tag:'vid'},
+    {t:'TryHackMe: "Extending the Network" — firewalls and VPNs',tag:'do'},
+    {t:'TryHackMe: "Nmap" room — run your first network scan',tag:'do'},
+    {t:'Download and install VirtualBox from virtualbox.org (free)',tag:'do'},
+    {t:'Self-quiz: TCP vs UDP, what is a port, what is a packet, what does Nmap do',tag:'do'},
+  ]},
+  {ph:1,title:'Week 5 — Linux deep dive',sub:'CLI mastery + Kali Linux VM running',tasks:[
+    {t:'Watch: NetworkChuck Linux crash course first 30 minutes',tag:'vid'},
+    {t:'TryHackMe: Linux Fundamentals revisit — focus on parts that were hard',tag:'do'},
+    {t:'TryHackMe: "Linux Strength Training" — grep, awk, cut, sort for log parsing',tag:'do'},
+    {t:'TryHackMe: "Bash Scripting" room',tag:'do'},
+    {t:'VirtualBox: download Kali Linux ISO from kali.org and install as VM',tag:'do'},
+    {t:'Inside Kali VM: practice ls, cd, cat, grep, ps aux, netstat in terminal',tag:'do'},
+    {t:'Create GitHub repo "cybersec-journey" — push first setup-log.md file',tag:'build'},
+  ]},
+  {ph:1,title:'Week 6 — Wireshark + real attack traffic',sub:'Analyze actual malicious PCAPs — your first real SOC work',tasks:[
+    {t:'Watch: David Bombal "Wireshark full tutorial" on YouTube',tag:'vid'},
+    {t:'TryHackMe: "Wireshark: the basics" room',tag:'do'},
+    {t:'TryHackMe: "Wireshark: packet operations" room',tag:'do'},
+    {t:'Download real attack PCAP from malware-traffic-analysis.net (free)',tag:'do'},
+    {t:'Analyze PCAP in Wireshark — find attacker IP, target, protocol. Write findings.',tag:'do'},
+    {t:'TryHackMe: "Wireshark: traffic analysis" room',tag:'do'},
+    {t:'Book Security+ exam at comptia.org — target Week 16 as exam date',tag:'cert'},
+  ]},
+  {ph:2,title:'Week 7 — Security+ Domain 1',sub:'Threats, attacks, vulnerabilities — know every attack type',tasks:[
+    {t:'Professor Messer Domain 1 sections 1.1 + 1.2 — social engineering and malware types',tag:'vid'},
+    {t:'Professor Messer Domain 1 sections 1.3 + 1.4 — application and network attacks',tag:'vid'},
+    {t:'TryHackMe: "Phishing" room — analyze a real phishing email',tag:'do'},
+    {t:'Professor Messer Domain 1 practice questions — target 80%+',tag:'cert'},
+    {t:'TryHackMe SOC Level 1: start "Junior Security Analyst Intro" room',tag:'do'},
+    {t:'Write from memory: 5 malware types, 3 social engineering attacks, what is a zero-day',tag:'do'},
+  ]},
+  {ph:2,title:'Week 8 — Security+ Domain 2',sub:'Architecture, cloud security, secure network design',tasks:[
+    {t:'Professor Messer Domain 2 — cloud security and virtualization videos',tag:'vid'},
+    {t:'Professor Messer Domain 2 remaining videos + practice questions (target 80%+)',tag:'cert'},
+    {t:'TryHackMe SOC Level 1: "Cyber Defence Frameworks" room — MITRE deep dive',tag:'do'},
+    {t:'Splunk Fundamentals 1: complete modules 1 and 2 at splunk.com/training',tag:'do'},
+    {t:'Domains 1+2 combined practice test — score and log result in notes',tag:'cert'},
+  ]},
+  {ph:2,title:'Week 9 — Security+ Domain 3',sub:'Encryption, PKI, certificates, identity management',tasks:[
+    {t:'Professor Messer Domain 3 — cryptography and PKI (how HTTPS and SSL/TLS work)',tag:'vid'},
+    {t:'Professor Messer Domain 3 — wireless security and identity management (MFA, SSO)',tag:'vid'},
+    {t:'TryHackMe SOC Level 1: "Network Security and Traffic Analysis" rooms',tag:'do'},
+    {t:'Splunk Fundamentals 1: complete modules 3 and 4',tag:'do'},
+    {t:'ExamCompass.com Domain 3 free practice questions — target 80%+',tag:'cert'},
+  ]},
+  {ph:2,title:'Week 10 — Security+ Domain 4',sub:'Incident response — the most important domain for SOC work',tasks:[
+    {t:'Professor Messer Domain 4 — incident response lifecycle. Memorize PICERL.',tag:'vid'},
+    {t:'Professor Messer Domain 4 — digital forensics and log analysis',tag:'vid'},
+    {t:'LetsDefend.io: create free account — complete your first full SOC alert investigation',tag:'do'},
+    {t:'Splunk Fundamentals 1: finish ALL remaining modules',tag:'do'},
+    {t:'Screenshot Splunk cert completion — add to LinkedIn immediately',tag:'cert'},
+    {t:'ExamCompass Domain 4 practice questions — do not move on until hitting 85%+',tag:'cert'},
+  ]},
+  {ph:2,title:'Week 11 — Security+ Domain 5',sub:'GRC, compliance, risk management — 20% of the exam',tasks:[
+    {t:'Professor Messer Domain 5 — risk management and data privacy (PIPEDA, GDPR)',tag:'vid'},
+    {t:'Professor Messer Domain 5 remaining videos + practice questions',tag:'cert'},
+    {t:'LetsDefend: complete 2 more alert investigations and document both fully',tag:'do'},
+    {t:'Full 90-question timed practice exam on ExamCompass — no notes, no breaks',tag:'cert'},
+    {t:'Weak domain targeted review — rewatch only the sections you scored low on',tag:'cert'},
+  ]},
+  {ph:2,title:'Week 12 — three full practice exams',sub:'Hit 80%+ consistently before touching the real exam',tasks:[
+    {t:'Full timed practice exam #2 — different question set — target 80%+',tag:'cert'},
+    {t:'Targeted review of any domain that scored below 75% on exam #2',tag:'cert'},
+    {t:'TryHackMe SOC Level 1: complete all remaining rooms you have not finished',tag:'do'},
+    {t:'Full timed practice exam #3 — score and compare to previous two attempts',tag:'cert'},
+    {t:'VirtualBox: create Windows 10 VM — download free Microsoft evaluation ISO',tag:'do'},
+  ]},
+  {ph:2,title:'Week 13 — final exam prep + PBQs',sub:'Performance-based questions + exam simulation',tasks:[
+    {t:'Professor Messer: performance-based question (PBQ) video series — watch all of it',tag:'vid'},
+    {t:'Final timed practice exam — simulate real conditions exactly, same time of day',tag:'cert'},
+    {t:'Install Splunk Free on Windows VM — follow YouTube "Splunk SIEM home lab 2024"',tag:'do'},
+    {t:'Confirm exam appointment — check location, ID requirements, and rules',tag:'cert'},
+    {t:'Night before exam: light notes review only — 8 hours sleep minimum',tag:'do'},
+  ]},
+  {ph:2,title:'Week 14 — write Security+ exam',sub:'The single most important milestone in this entire plan',tasks:[
+    {t:'Write CompTIA Security+ SY0-701 exam — you are ready',tag:'cert'},
+    {t:'Pass: screenshot result immediately — upload to LinkedIn same day',tag:'cert'},
+    {t:'Update resume with CompTIA Security+ certification',tag:'do'},
+    {t:'Update LinkedIn headline to include Security+ Certified',tag:'do'},
+  ]},
+  {ph:3,title:'Week 15–16 — home SOC lab',sub:'Attack yourself. Detect it. Document everything on GitHub.',tasks:[
+    {t:'Complete VirtualBox lab: Windows VM + Kali Linux + Splunk all running together',tag:'build'},
+    {t:'Run Nmap scan from Kali against Windows VM — watch Splunk detect it. Screenshot.',tag:'do'},
+    {t:'Run brute force attack — write Splunk detection rule for 5+ failed logins in 60 seconds',tag:'do'},
+    {t:'GitHub repo "home-soc-lab" — README with setup, attacks, detections, screenshots',tag:'build'},
+    {t:'Add SOC lab link to devarshkotak.com under new Security Projects section',tag:'build'},
+    {t:'Register free VirusTotal API key at virustotal.com — start Python threat intel tool',tag:'build'},
+  ]},
+  {ph:3,title:'Week 17–18 — Python threat intel tool',sub:'Your biggest differentiator — coders are rare in SOC',tasks:[
+    {t:'Build FastAPI endpoint: accepts IP/domain/hash → queries VirusTotal API → returns verdict',tag:'build'},
+    {t:'Add Shodan API integration — returns geolocation and open ports for any IP',tag:'build'},
+    {t:'Add simple HTML frontend — deploy entire tool to Vercel',tag:'build'},
+    {t:'GitHub repo with clean README, example API calls, and screenshot of tool in use',tag:'build'},
+    {t:'LetsDefend.io: complete 5 full SOC alert investigations end to end',tag:'do'},
+    {t:'Write a 1-page incident report for each LetsDefend investigation (5 total)',tag:'build'},
+    {t:'Publish all 5 incident reports on GitHub and optionally on Medium',tag:'build'},
+  ]},
+  {ph:3,title:'Week 19–22 — HackTheBox + CTF',sub:'TryHackMe SOC badge + HTB machines + first competition',tasks:[
+    {t:'TryHackMe SOC Level 1: complete ALL remaining rooms — earn the full badge',tag:'do'},
+    {t:'Screenshot TryHackMe SOC Level 1 badge — add to LinkedIn and resume',tag:'cert'},
+    {t:'HackTheBox: create account — complete all Tier 0 Starting Point machines',tag:'do'},
+    {t:'HTB Starting Point Tier 1 — complete at least 3 machines',tag:'do'},
+    {t:'Write a GitHub walkthrough for each HTB machine you completed',tag:'build'},
+    {t:'Find a CTF competition at ctftime.org — participate and complete any challenges',tag:'do'},
+    {t:'Add CTF participation to resume and LinkedIn activity section',tag:'do'},
+  ]},
+  {ph:4,title:'Week 23 — resume + LinkedIn overhaul',sub:'Return to Claude — we build your cyber resume together',tasks:[
+    {t:'Return to Claude and say: "I am at Week 23 — build my cybersecurity resume"',tag:'do'},
+    {t:'New cybersecurity resume written and tailored to Canadian SOC Analyst roles',tag:'do'},
+    {t:'LinkedIn headline, about section, and skills list completely rewritten for cyber',tag:'do'},
+    {t:'devarshkotak.com: security section fully updated with all 3 projects linked',tag:'build'},
+    {t:'Target company list built and ranked by hiring likelihood for your profile',tag:'do'},
+  ]},
+  {ph:4,title:'Week 24–25 — active applications',sub:'10–15 applications per week — no exceptions',tasks:[
+    {t:'Apply to 10–15 SOC Analyst / Junior Security Analyst roles this week',tag:'do'},
+    {t:'Connect with 5 Canadian cybersecurity professionals on LinkedIn this week',tag:'do'},
+    {t:'Post first LinkedIn update about your cybersecurity learning journey',tag:'do'},
+    {t:'Apply to 10–15 more roles — Week 25',tag:'do'},
+    {t:'Return to Claude with any interview invite — mock interview prep immediately',tag:'do'},
+  ]},
+  {ph:4,title:'Week 26 — hired',sub:'SOC Analyst · $60K–$80K · NOC 21220 · PR clock starts',tasks:[
+    {t:'Negotiate your offer — use Security+, coding skills, and projects as leverage',tag:'do'},
+    {t:'Accept offer — confirm NOC 21220 classification with employer for PR purposes',tag:'do'},
+    {t:'PR Express Entry clock starts — CRS score improves with Canadian job offer',tag:'do'},
+    {t:'Plan Year 1: start BTL1 cert study after 3 months on the job',tag:'do'},
+  ]},
+];
+
+const COMPETITORS=[
+  {label:'Avg CS grad (no pivot)',pct:8,col:'#ff4060'},
+  {label:'Bootcamp self-taught',pct:22,col:'#ffcc00'},
+  {label:'IT support switcher',pct:18,col:'#4d9fff'},
+  {label:'Cert-only (no projects)',pct:35,col:'#888780'},
+];
+
+/* ── STATE ── */
+let S={tasks:{},streak:[],notes:[]};
+const KEY='devarsh_cyber_v4';
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){try{const d=localStorage.getItem(KEY);if(d)S=JSON.parse(d)}catch(e){}}
+load();
+
+/* ── CALCS ── */
+function totalTasks(){return WEEKS.reduce((a,w)=>a+w.tasks.length,0)}
+function doneTasks(){return Object.values(S.tasks).filter(Boolean).length}
+function doneInWeek(wi){return WEEKS[wi].tasks.filter((_,ti)=>!!S.tasks[wi+'_'+ti]).length}
+function weekPct(wi){return Math.round(doneInWeek(wi)/WEEKS[wi].tasks.length*100)}
+function weeksComplete(){return WEEKS.filter((_,i)=>weekPct(i)===100).length}
+function phasePct(ph){
+  const idx=WEEKS.reduce((a,w,i)=>{if(w.ph===ph)a.push(i);return a;},[]);
+  const tot=idx.reduce((a,i)=>a+WEEKS[i].tasks.length,0);
+  const done=idx.reduce((a,i)=>a+doneInWeek(i),0);
+  return tot?Math.round(done/tot*100):0;
+}
+function currentStreak(){
+  let s=0,today=new Date();
+  for(let i=0;i<120;i++){
+    const d=new Date(today);d.setDate(today.getDate()-i);
+    if(S.streak.includes(d.toISOString().slice(0,10)))s++;
+    else if(i>0)break;
+  }
+  return s;
+}
+
+/* FIX #3 — time-based ahead calc */
+function aheadWeeks(){
+  const wksDone=weeksComplete();
+  /* avg CS grad: ~1 week progress per 3 weeks real time from launch */
+  const launchKey='cyber_launch';
+  let launch=localStorage.getItem(launchKey);
+  if(!launch){launch=new Date().toISOString().slice(0,10);localStorage.setItem(launchKey,launch);}
+  const daysSinceLaunch=Math.floor((Date.now()-new Date(launch))/(86400000));
+  const expectedWeeks=Math.min(Math.floor(daysSinceLaunch/7)*0.4,19);
+  return Math.max(0,Math.round(wksDone-expectedWeeks));
+}
+
+/* ── STATS UPDATE ── */
+function updateStats(){
+  const done=doneTasks(),tot=totalTasks(),pct=Math.round(done/tot*100);
+  const wks=weeksComplete(),str=currentStreak(),aw=aheadWeeks();
+  const phNames=['Phase 1','Phase 2','Phase 3','Phase 4','Phase 5'];
+  const curPh=WEEKS[Math.min(wks,WEEKS.length-1)].ph;
+  document.getElementById('h-done').textContent=done;
+  document.getElementById('h-pct').textContent=pct+'% of plan';
+  document.getElementById('h-streak').textContent=str;
+  document.getElementById('h-streak-sub').textContent=str===0?'Log a session to start':str===1?'1 day — keep going':str+' days — keep going';
+  document.getElementById('h-weeks').textContent=wks;
+  document.getElementById('h-phase').textContent=phNames[curPh]+' active';
+  document.getElementById('h-ahead').textContent=aw;
+  document.getElementById('h-ahead-sub').textContent=aw===0?'Complete tasks to pull ahead':aw+' wks ahead of avg';
+  document.getElementById('sb-done').textContent=done;
+  document.getElementById('sb-weeks').textContent=wks;
+  document.getElementById('sb-ahead').textContent=aw;
+  document.getElementById('streak-chip').textContent=str+' DAY STREAK';
+}
+
+/* ── PHASE NAV ── */
+function renderPhNav(){
+  const el=document.getElementById('ph-nav');el.innerHTML='';
+  PHASES.forEach((p,pi)=>{
+    const pct=phasePct(pi);
+    const div=document.createElement('div');
+    div.className='ph-nav-item';
+    div.onclick=()=>scrollToPhase(pi);
+    const pipCls=pct===100?'pip-done':pct>0?'pip-active':'';
+    div.innerHTML=`<div class="pni-pip ${pipCls}"></div>
+      <div class="pni-body">
+        <div class="pni-name">${p.name}</div>
+        <div class="pni-meta">WK ${p.wks} · ${pct}%</div>
+        <div class="pni-track"><div class="pni-fill" style="width:${pct}%"></div></div>
+      </div>`;
+    el.appendChild(div);
+  });
+}
+function scrollToPhase(ph){
+  const secs=document.querySelectorAll('.phase-sec');
+  if(secs[ph])secs[ph].scrollIntoView({behavior:'smooth',block:'start'});
+  closeSidebar();
+}
+
+/* ── STREAK CALENDAR — FIX #5 month labels ── */
+function renderStreakCal(){
+  const el=document.getElementById('streak-cal');el.innerHTML='';
+  const today=new Date();
+  const days=42;
+  /* month labels */
+  const monthsRow=document.createElement('div');
+  monthsRow.className='streak-months';
+  const seenMonths={};
+  const grid=document.createElement('div');
+  grid.className='streak-grid';
+  /* study days: Mon=1, Wed=3, Thu=4, Sat=6, Sun=0 */
+  const studyDays=new Set([0,1,3,4,6]);
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(today);d.setDate(today.getDate()-i);
+    const key=d.toISOString().slice(0,10);
+    const mo=d.toLocaleString('default',{month:'short'}).toUpperCase();
+    const isToday=i===0;
+    const isStudyDay=studyDays.has(d.getDay());
+    const dot=document.createElement('div');
+    dot.className='s-day'+
+      (S.streak.includes(key)?' s-hit':'')+
+      (isToday?' s-today':'')+
+      (!S.streak.includes(key)&&isStudyDay?' s-study':'');
+    dot.title=key+(isToday?' (today)':'');
+    dot.onclick=()=>{
+      if(S.streak.includes(key))S.streak=S.streak.filter(k=>k!==key);
+      else S.streak.push(key);
+      save();renderStreakCal();updateStats();
+    };
+    grid.appendChild(dot);
+  }
+  /* build month labels across 42 days */
+  const mlabels=[];
+  let curMo='',curCount=0;
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(today);d.setDate(today.getDate()-i);
+    const mo=d.toLocaleString('default',{month:'short'}).toUpperCase();
+    if(mo!==curMo){if(curMo)mlabels.push({mo:curMo,count:curCount});curMo=mo;curCount=1;}
+    else curCount++;
+  }
+  mlabels.push({mo:curMo,count:curCount});
+  mlabels.forEach(m=>{
+    const sp=document.createElement('span');
+    sp.className='streak-month-lbl';
+    sp.style.flex=m.count;
+    sp.textContent=m.mo;
+    monthsRow.appendChild(sp);
+  });
+  el.appendChild(monthsRow);
+  el.appendChild(grid);
+}
+
+/* ── PHASE SECTIONS ── */
+function renderPhaseSections(){
+  const el=document.getElementById('phase-sections');el.innerHTML='';
+  PHASES.forEach((p,pi)=>{
+    const pct=phasePct(pi);
+    const sec=document.createElement('div');
+    sec.className='phase-sec';
+    sec.innerHTML=`<div class="phase-hdr">
+      <span class="ph-num">0${pi+1}</span>
+      <span class="ph-name">${p.name}</span>
+      <span class="ph-wks">WK ${p.wks}</span>
+      <span class="ph-pct" id="ph-pct-${pi}">${pct}%</span>
+    </div>
+    <div id="ph-weeks-${pi}"></div>`;
+    el.appendChild(sec);
+    const wDiv=document.getElementById('ph-weeks-'+pi);
+    WEEKS.forEach((w,wi)=>{
+      if(w.ph!==pi)return;
+      const p2=weekPct(wi);
+      const card=document.createElement('div');
+      card.className='wk-card'+(p2===100?' wk-done':'');
+      card.id='wkcard-'+wi;
+      const isFirst=pi===0&&wi===0;
+      card.innerHTML=`<div class="wk-hdr" onclick="toggleWeek(${wi})">
+        <span class="wk-badge">WK ${wi+1}</span>
+        <div class="wk-info">
+          <div class="wk-title">${w.title}</div>
+          <div class="wk-sub">${w.sub}</div>
+        </div>
+        <div class="wk-prog">
+          <span class="wk-frac" id="wfrac-${wi}" style="color:${p2===100?'var(--green)':p2>0?'var(--blue)':'var(--text3)'}">${doneInWeek(wi)}/${w.tasks.length}</span>
+          <div class="wk-bar-wrap"><div class="wk-bar-fill" id="wbar-${wi}" style="width:${p2}%"></div></div>
+        </div>
+        <span class="wk-chev${isFirst?' chev-open':''}" id="wchev-${wi}">▶</span>
+      </div>
+      <div class="task-body" id="wbody-${wi}" style="display:${isFirst?'block':'none'}"></div>`;
+      wDiv.appendChild(card);
+      renderWeekTasks(wi);
+    });
+  });
+}
+
+function renderWeekTasks(wi){
+  const el=document.getElementById('wbody-'+wi);if(!el)return;
+  el.innerHTML='';
+  const tagCls={vid:'tt-vid',do:'tt-do',build:'tt-build',cert:'tt-cert'};
+  const tagLbl={vid:'Watch',do:'Do',build:'Build',cert:'Cert'};
+  WEEKS[wi].tasks.forEach((task,ti)=>{
+    const key=wi+'_'+ti,checked=!!S.tasks[key];
+    const row=document.createElement('div');
+    row.className='task-row';
+    row.onclick=()=>toggleTask(wi,ti);
+    row.innerHTML=`<div class="t-cb${checked?' cb-done':''}" id="tcb-${key}"></div>
+      <div class="t-text${checked?' t-done':''}" id="ttext-${key}">${task.t}</div>
+      <div class="t-tag ${tagCls[task.tag]}">${tagLbl[task.tag]}</div>`;
+    el.appendChild(row);
+  });
+  if(weekPct(wi)===100){
+    const chip=document.createElement('div');
+    chip.className='wk-done-chip';
+    chip.textContent='WEEK COMPLETE — YOU ARE AHEAD OF SCHEDULE';
+    el.appendChild(chip);
+  }
+}
+
+function toggleWeek(wi){
+  const b=document.getElementById('wbody-'+wi);
+  const c=document.getElementById('wchev-'+wi);
+  const open=b.style.display!=='none';
+  b.style.display=open?'none':'block';
+  c.classList.toggle('chev-open',!open);
+}
+
+/* FIX #2 — surgical DOM update, no full re-render */
+function toggleTask(wi,ti){
+  const key=wi+'_'+ti;
+  S.tasks[key]=!S.tasks[key];
+  save();
+  /* update just this checkbox */
+  const cb=document.getElementById('tcb-'+key);
+  const tt=document.getElementById('ttext-'+key);
+  if(cb)cb.className='t-cb'+(S.tasks[key]?' cb-done':'');
+  if(tt)tt.className='t-text'+(S.tasks[key]?' t-done':'');
+  /* update week bar + frac */
+  const p2=weekPct(wi);
+  const frac=document.getElementById('wfrac-'+wi);
+  const bar=document.getElementById('wbar-'+wi);
+  const card=document.getElementById('wkcard-'+wi);
+  if(frac){frac.textContent=doneInWeek(wi)+'/'+WEEKS[wi].tasks.length;frac.style.color=p2===100?'var(--green)':p2>0?'var(--blue)':'var(--text3)';}
+  if(bar)bar.style.width=p2+'%';
+  if(card){card.classList.toggle('wk-done',p2===100);card.querySelector('.wk-hdr').style.background=p2===100?'var(--green-bg)':'';}
+  /* re-render tasks for this week only (for done chip) */
+  renderWeekTasks(wi);
+  /* update phase pct */
+  const ph=WEEKS[wi].ph;
+  const phPct=document.getElementById('ph-pct-'+ph);
+  if(phPct)phPct.textContent=phasePct(ph)+'%';
+  /* global stats + phase nav */
+  updateStats();
+  renderPhNav();
+  renderCompBars();
+}
+
+/* ── COMPETE ── */
+function renderCompBars(){
+  const el=document.getElementById('comp-bars');if(!el)return;
+  el.innerHTML='';
+  const myPct=Math.min(100,Math.round(weeksComplete()/19*100));
+  const youRow=document.createElement('div');
+  youRow.className='comp-row';
+  youRow.innerHTML=`<div class="comp-name" style="color:var(--green);font-weight:700">You</div>
+    <div class="comp-track"><div class="comp-fill" style="width:${myPct}%;background:var(--green)"></div></div>
+    <div class="comp-pct" style="color:var(--green)">${myPct}%</div>`;
+  el.appendChild(youRow);
+  COMPETITORS.forEach(c=>{
+    const row=document.createElement('div');
+    row.className='comp-row';
+    row.innerHTML=`<div class="comp-name">${c.label}</div>
+      <div class="comp-track"><div class="comp-fill" style="width:${c.pct}%;background:${c.col}"></div></div>
+      <div class="comp-pct">${c.pct}%</div>`;
+    el.appendChild(row);
+  });
+}
+
+/* ── NOTES ── */
+function saveNote(){
+  const ta=document.getElementById('note-ta');
+  const txt=ta.value.trim();if(!txt)return;
+  const now=new Date();
+  S.notes.push({ts:now.toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}),txt});
+  const today=now.toISOString().slice(0,10);
+  if(!S.streak.includes(today)){S.streak.push(today);renderStreakCal();}
+  save();ta.value='';renderNotes();updateStats();
+}
+function clearNotes(){if(confirm('Clear all session notes?')){S.notes=[];save();renderNotes();}}
+function renderNotes(){
+  const el=document.getElementById('notes-out');if(!el)return;
+  el.innerHTML='';
+  if(!S.notes.length){el.innerHTML='<div style="font-family:var(--mono);font-size:10px;color:var(--text3)">No sessions logged yet.</div>';return;}
+  [...S.notes].reverse().forEach(n=>{
+    const d=document.createElement('div');
+    d.className='note-entry';
+    d.innerHTML=`<div class="note-ts">${n.ts}</div><div class="note-txt">${n.txt}</div>`;
+    el.appendChild(d);
+  });
+}
+
+/* FIX #4 — export + import backup */
+function exportBackup(){
+  const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='cyber-tracker-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();URL.revokeObjectURL(url);
+}
+function importBackup(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(data.tasks&&data.streak&&data.notes){
+        S=data;save();location.reload();
+      }else alert('Invalid backup file.');
+    }catch{alert('Could not read backup file.');}
+  };
+  reader.readAsText(file);
+  e.target.value='';
+}
+
+/* FIX #6 — reset */
+function resetAll(){
+  if(confirm('Reset ALL progress? This cannot be undone.\n\nTip: Export a backup first using the ↓ button.')){
+    const launch=localStorage.getItem('cyber_launch');
+    S={tasks:{},streak:[],notes:[]};save();
+    if(launch)localStorage.setItem('cyber_launch',launch);
+    location.reload();
+  }
+}
+
+/* ── PAGE SWITCH ── */
+function showPage(id,tab){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('pg-active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('nt-active'));
+  document.getElementById('page-'+id).classList.add('pg-active');
+  tab.classList.add('nt-active');
+  if(id==='compete')renderCompBars();
+  if(id==='notes')renderNotes();
+}
+
+/* ── MOBILE SIDEBAR ── */
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');
+  const ov=document.getElementById('sb-overlay');
+  sb.classList.toggle('sb-open');
+  ov.classList.toggle('ov-show');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('sb-open');
+  document.getElementById('sb-overlay').classList.remove('ov-show');
+}
+
+/* ── INIT ── */
+function init(){
+  renderPhaseSections();
+  renderPhNav();
+  renderStreakCal();
+  updateStats();
+  renderCompBars();
+  renderNotes();
+}
+init();
+</script>
+</body>
+</html>
